@@ -12,12 +12,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.calculator.ui.theme.LightGray
+import com.example.calculator.ui.theme.Orange
 
 @Composable
 fun Calculator(
     state: CalculatorState,
+    modifier: Modifier = Modifier,
     buttonSpacing: Dp = 8.dp,
-    modifier: Modifier = Modifier
+    onAction: (CalculatorAction) -> Unit
 ) {
     Box(modifier = modifier) {
         Column (
@@ -44,11 +47,33 @@ fun Calculator(
                 CalculatorButton(
                     symbol = "AC",
                     modifier = Modifier
-                        .background()
-                ) {
-
-                }
-
+                        .background(LightGray)
+                        .aspectRatio(2f)
+                        .weight(2f),
+                    onClick = {
+                        onAction(CalculatorAction.Clear)
+                    }
+                )
+                CalculatorButton(
+                    symbol = "Del",
+                    modifier = Modifier
+                        .background(LightGray)
+                        .aspectRatio(1f)
+                        .weight(1f),
+                    onClick = {
+                        onAction(CalculatorAction.Delete)
+                    }
+                )
+                CalculatorButton(
+                    symbol = "/",
+                    modifier = Modifier
+                        .background(Orange)
+                        .aspectRatio(1f)
+                        .weight(1f),
+                    onClick = {
+                        onAction(CalculatorAction.Operation(CalculatorOperation.Divide))
+                    }
+                )
             }
         }
     }
